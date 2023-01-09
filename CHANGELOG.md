@@ -1,3 +1,53 @@
+## 3.11.2
+### Updated
+  - Smarty 4.3.0
+
+### Changed
+  - The installer no longer adds a closing php-tag to the configuration file
+  - The installer had an invisible space that generated a longer scrollbar
+
+## 3.11.1
+### Fixed
+  - The installer used incorrect database structure, so an upgrade where automatically run
+
+## 3.11.0
+### Changed
+  - Updated requirements to PHP 7.4 and MySQL (5.7 / 8.0) or MariaDB 10.6
+
+### Added
+  - EditorConfig for Markdown
+
+### Updated
+  - RedBeanPHP 5.7.3
+  - bulletproof 4.0.1 with local patches for PHP 8.1 support
+  - Smarty 4.2.1
+
+### Fixed
+  - Change default dates to "null" instead of "0000-00-00"
+  - Support for PHP 8.0
+
+### Removed
+  - password_compat
+  - random_compat
+  - hash_equals
+
+## 3.10.2 (2022-10-09)
+### Updated
+  - imdbphp 7.3.1
+
+## 3.10.1 (2021-07-15)
+### Updated
+  - imdbphp 7.2.0
+
+## 3.10.0 (2021-06-26)
+### Added
+  - Portuguese language by @cnovoa #64
+
+### Updated
+  - imdbphp 6.5.1
+  - RedBeanPHP 5.7
+  - Smarty 3.1.39
+
 ## 3.9.0 (2020-01-26)
 ### Added
   - French language by @maxlefou #55

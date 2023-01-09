@@ -83,6 +83,7 @@ class Request
         $this->responseHeaders = array();
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->requestHeaders);
         $this->page = curl_exec($this->ch);
+        curl_close($this->ch);
         if ($this->page !== false) {
             return true;
         }
@@ -126,6 +127,7 @@ class Request
                 return $head;
             }
         }
+        return '';
     }
 
     /**
@@ -153,7 +155,7 @@ class Request
     public function getRedirect()
     {
         $status = $this->getStatus();
-        if ($status == 301 || $status == 302 || $status == 303 || $status == 307) {
+        if ($status == 301 || $status == 302 || $status == 303 || $status == 307 || $status == 308) {
             foreach ($this->getLastResponseHeaders() as $header) {
                 if (strpos(trim(strtolower($header)), 'location') !== 0) {
                     continue;

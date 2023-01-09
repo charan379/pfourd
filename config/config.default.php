@@ -19,6 +19,7 @@ $settings["languages"] = array(
 	"Italian"    => "it",
 	"Czech"      => "cz",
 	"Magyar"     => "hu",
+	"Portuguese" => "pt",
 );
 
 /**
@@ -76,14 +77,6 @@ $settings["db"]["user"] = "root";
 $settings["db"]["pass"] = "";
 $settings["db"]["utf8"] = true;
 $settings["db"]["debug"] = $settings["development"];
-
-/**
- * Fix for MySQL with NO_ZERO_IN_DATE and/or STRICT_ALL_TABLES activated
- * http://dev.mysql.com/doc/refman/5.7/en/sql-mode.html#sqlmode_no_zero_in_date
- * Activate if you get SQL ERROR 1292 (0000-00-00) when saving movies.
- * If you get an error when activating this feature. Contact your webhost.
- */
-$settings["db"]["NO_ZERO_IN_DATE"] = true;
 
 /**
  * The location of the images (movie image and cover)

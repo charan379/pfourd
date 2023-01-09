@@ -20,7 +20,7 @@ function reload($add = array()) {
 	global $webroot;
 	header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 	header("Expires: Mon, 01 Jan 1970 00:00:00 GMT"); 	// Date in the past
-	
+
 	if(isset($_SERVER["REQUEST_URI"])) {
 		$url = setQueryString($_SERVER["REQUEST_URI"], $add);
 		header("Location: " . $url);
@@ -61,14 +61,14 @@ function back($add = array()) {
 function setQueryString($url, $values) {
 	$url = urldecode($url);
 	$querystring = "";
-	
+
 	// Get url and querystring
 	$parts = preg_split("/\?/", $url);
 	if(count($parts) === 2) {
 		$url = $parts[0];
 		$querystring = $parts[1];
 	}
-	
+
 	// Get querystring parts
 	$queryparts = array();
 	$qsparts = preg_split("/&/", $querystring);
@@ -78,14 +78,14 @@ function setQueryString($url, $values) {
 		$value = count($keyvalue) === 2 ? $keyvalue[1] : false;
 		$queryparts[$key] = $value;
 	}
-	
+
 	// Overwrite querystring
 	if(is_array($values)) {
 		foreach($values as $key => $value) {
 			$queryparts[$key] = $value;
 		}
 	}
-	
+
 	// Reconstruct url
 	$valuePairs = array();
 	foreach($queryparts as $qp => $v) {
@@ -140,7 +140,7 @@ function fillObject($obj, $row, $include = array(), $exclude = array()) {
 	foreach($exclude as $e)
 		$exc[$e] = true;
 	$exclude = $exc;
-	
+
 	if(isset($row) && $row) {
 		foreach($row as $key => $value) {
 			$allowed = true;
@@ -152,6 +152,11 @@ function fillObject($obj, $row, $include = array(), $exclude = array()) {
 			if($allowed)
 				$obj->{$key} = stripslashes($value);
 		}
+
+		if(empty($obj->loandate) || !$obj->loaned) {
+			$obj->loandate = null;
+		}
+
 		return $obj;
 	}
 	return false;
@@ -382,46 +387,6 @@ if(!function_exists('exif_imagetype')) {
 		if(isset($i[2]))
 			return $i[2];
 		return false;
-	}
-}
-
-/**
- * Compares strings in constant time.
- *
- * @param string $known_string
- *   The expected string.
- * @param string $user_string
- *   The user supplied string to check.
- *
- * @return bool
- *   Returns TRUE when the two strings are equal, FALSE otherwise.
- */
-if(!function_exists('hash_equals')) {
-	function hash_equals($known_string, $user_string) {
-		// Backport of hash_equals() function from PHP 5.6
-		// @see https://github.com/php/php-src/blob/PHP-5.6/ext/hash/hash.c#L739
-		if (!is_string($known_string)) {
-		  trigger_error(sprintf("Expected known_string to be a string, %s given", gettype($known_string)), E_USER_WARNING);
-		  return FALSE;
-		}
-
-		if (!is_string($user_string)) {
-		  trigger_error(sprintf("Expected user_string to be a string, %s given", gettype($user_string)), E_USER_WARNING);
-		  return FALSE;
-		}
-
-		$known_len = strlen($known_string);
-		if ($known_len !== strlen($user_string)) {
-		  return FALSE;
-		}
-
-		// This is security sensitive code. Do not optimize this for speed.
-		$result = 0;
-		for ($i = 0; $i < $known_len; $i++) {
-		  $result |= (ord($known_string[$i]) ^ ord($user_string[$i]));
-		}
-
-		return $result === 0;
 	}
 }
 
